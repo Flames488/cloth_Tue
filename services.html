@@ -103,8 +103,27 @@
         </div>
         <span style="font-size:13px;color:var(--muted);">Share of units sold, last 30 days</span>
       </div>
-      <div style="position:relative;height:280px;">
-        <canvas id="trendingChart"></canvas>
+      <div style="display:flex;align-items:flex-end;gap:28px;height:280px;padding:0 8px 32px;border-bottom:1px solid var(--line);">
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:1;height:100%;gap:10px;">
+          <span style="font-size:13px;font-weight:800;">38%</span>
+          <div style="width:100%;max-width:64px;height:190px;border-radius:8px 8px 0 0;background:#15171b;"></div>
+          <span style="font-size:12.5px;color:var(--muted);">T-Shirts</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:1;height:100%;gap:10px;">
+          <span style="font-size:13px;font-weight:800;">31%</span>
+          <div style="width:100%;max-width:64px;height:155px;border-radius:8px 8px 0 0;background:#a8622f;"></div>
+          <span style="font-size:12.5px;color:var(--muted);">Hoodies</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:1;height:100%;gap:10px;">
+          <span style="font-size:13px;font-weight:800;">19%</span>
+          <div style="width:100%;max-width:64px;height:95px;border-radius:8px 8px 0 0;background:#e8752b;"></div>
+          <span style="font-size:12.5px;color:var(--muted);">Denim</span>
+        </div>
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:flex-end;flex:1;height:100%;gap:10px;">
+          <span style="font-size:13px;font-weight:800;">12%</span>
+          <div style="width:100%;max-width:64px;height:60px;border-radius:8px 8px 0 0;background:#e0ab2e;"></div>
+          <span style="font-size:12.5px;color:var(--muted);">Accessories</span>
+        </div>
       </div>
     </div>
   </section>
@@ -245,7 +264,6 @@
   </script>
   <script src="products.js"></script>
   <script src="cart.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
   <script>
     /* ---- render shop grid from the shared product catalog ---- */
     (function () {
@@ -288,45 +306,6 @@
           var size = select ? select.value : '';
           if (window.TueCart) window.TueCart.add(id, size, 1);
         });
-      });
-    })();
-
-    /* ---- trending this season chart ---- */
-    (function () {
-      var canvas = document.getElementById('trendingChart');
-      if (!canvas || typeof Chart === 'undefined') return;
-      new Chart(canvas.getContext('2d'), {
-        type: 'bar',
-        data: {
-          labels: ['T-Shirts', 'Hoodies', 'Denim', 'Accessories'],
-          datasets: [{
-            label: 'Share of units sold',
-            data: [38, 31, 19, 12],
-            backgroundColor: ['#15171b', '#a8622f', '#e8752b', '#e0ab2e'],
-            borderRadius: 8,
-            maxBarThickness: 64
-          }]
-        },
-        options: {
-          responsive: true,
-          maintainAspectRatio: false,
-          plugins: {
-            legend: { display: false },
-            tooltip: {
-              callbacks: {
-                label: function (ctx) { return ctx.parsed.y + '% of units sold'; }
-              }
-            }
-          },
-          scales: {
-            y: {
-              beginAtZero: true,
-              ticks: { callback: function (v) { return v + '%'; } },
-              grid: { color: '#e5e5e2' }
-            },
-            x: { grid: { display: false } }
-          }
-        }
       });
     })();
   </script>
