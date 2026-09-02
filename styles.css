@@ -101,6 +101,10 @@ a:hover{color:var(--accent);}
 .mobile-menu a.nav-link{padding:14px 24px;border-bottom:1px solid var(--line);font-size:15px;}
 .mobile-menu a.nav-link.active{background:var(--paper-soft);}
 .mobile-menu .mobile-cta{margin:16px 24px 20px;}
+/* The desktop active-link underline (.nav-link.active::after) is positioned
+   19px below the link, which lands on top of the next stacked item inside
+   the open mobile dropdown and reads as a stray line. Suppress it here. */
+.mobile-menu a.nav-link.active::after{display:none !important;content:none !important;}
 
 @media (max-width:980px){
   .nav-toggle{display:flex;}
@@ -152,4 +156,99 @@ a:hover{color:var(--accent);}
 }
 @media (max-width:600px){
   .shop-grid{grid-template-columns:1fr !important;}
+}
+
+/* ================================================================
+   MOBILE / RESPONSIVE HARDENING
+   Site is built mostly with inline styles, so overrides below use
+   !important + attribute selectors matching those inline patterns,
+   consistent with the approach already used above for padding.
+   ================================================================ */
+
+html{-webkit-text-size-adjust:100%;}
+body{overflow-x:hidden;}
+img{max-width:100%;}
+
+/* ---- Fluid, staged heading sizes across tablet + phone widths ---- */
+@media (max-width:980px){
+  h1{font-size:42px !important;}
+  h2{font-size:30px !important;}
+}
+@media (max-width:600px){
+  h1{font-size:32px !important;}
+  h2{font-size:24px !important;}
+  h3{font-size:17px !important;}
+}
+@media (max-width:380px){
+  h1{font-size:28px !important;}
+  h2{font-size:21px !important;}
+}
+
+/* ---- Shrink the large section paddings on tablets/phones ---- */
+@media (max-width:900px){
+  [style*="padding:100px 48px"]{padding-top:64px !important;padding-bottom:64px !important;}
+  [style*="padding:72px 48px 0"]{padding-top:48px !important;}
+  [style*="padding:72px 48px 56px"]{padding:48px 20px 36px !important;}
+  [style*="padding:72px 48px 8px"]{padding:48px 20px 8px !important;}
+  [style*="padding:0 48px 72px"]{padding-bottom:48px !important;}
+  [style*="padding:0 48px 100px"]{padding-bottom:56px !important;}
+  [style*="padding:56px 48px 100px"]{padding:36px 20px 56px !important;}
+}
+@media (max-width:600px){
+  [style*="padding:100px 48px"]{padding-top:44px !important;padding-bottom:44px !important;}
+}
+
+/* ---- Header: keep logo, cart, and hamburger from crowding on phones ---- */
+@media (max-width:480px){
+  header [style*="padding:18px 48px"]{gap:10px !important;}
+  header span[style*="font-size:10px"]{display:none;}
+  header span[style*="font-size:18px"]{font-size:15px !important;}
+  header svg[width="40"]{width:34px !important;height:34px !important;}
+}
+
+/* ---- Hero: cap the portrait image height so it doesn't dominate the screen ---- */
+@media (max-width:980px){
+  .hero-visual [style*="height:520px"]{height:auto !important;max-height:420px !important;}
+}
+@media (max-width:600px){
+  .hero-visual [style*="height:520px"]{max-height:340px !important;}
+  h1 br{display:none;}
+}
+
+/* ---- About page live-photo hero: fill viewport width, don't overflow ---- */
+@media (max-width:600px){
+  .about-hero-wrap{padding:16px 16px 0 !important;}
+  .about-hero-actions a{flex:1 1 auto;}
+}
+
+/* ---- Trust strip / values strip: single column on small phones ---- */
+@media (max-width:480px){
+  .trust-grid{grid-template-columns:1fr 1fr !important;row-gap:20px !important;}
+  .values-grid{grid-template-columns:1fr !important;}
+}
+
+/* ---- "What customers are buying most" trending chart ---- */
+@media (max-width:600px){
+  .trend-chart{gap:14px !important;height:220px !important;}
+  .trend-chart span[style*="font-size:12.5px"]{font-size:10.5px !important;}
+}
+@media (max-width:380px){
+  .trend-chart{gap:8px !important;}
+}
+
+/* ---- Contact / about collage / hero-grid: sensible stacked heights ---- */
+@media (max-width:600px){
+  .collage{height:auto !important;grid-template-columns:1fr !important;}
+  .collage > div{height:220px !important;}
+}
+
+/* ---- Feature strip + category cards: tighter spacing at narrow widths ---- */
+@media (max-width:600px){
+  .feat-grid{gap:20px !important;}
+  .svc-grid > a[style*="padding:28px"]{padding:20px !important;}
+}
+
+/* ---- Prevent the fixed-width rate/shop cards from ever forcing horizontal scroll ---- */
+@media (max-width:420px){
+  .shop-card select, .field input, .field textarea, .field select{font-size:16px;} /* avoids iOS zoom-on-focus */
 }
